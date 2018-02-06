@@ -37,6 +37,15 @@ label {
   background: rgba(265, 0, 0, 0.5);
 }
 
+fieldset {
+  border: 0;
+}
+
+legend {
+  position:absolute;
+  left: -5000px;
+}
+
 label:hover {
   background: rgba(0, 365, 0, 0.5);
 }
