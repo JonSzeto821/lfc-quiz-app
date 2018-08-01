@@ -245,7 +245,7 @@ $(document).ready(function() {
         if (!user_answer) {
             alert('Please make a selection!');
         } else {
-            scrnBtn = '#continue-btn';
+            scrnBtn = '.continue-btn';
 
             if (correct(user_answer)) {
             
