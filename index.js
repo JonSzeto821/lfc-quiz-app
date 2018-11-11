@@ -20,7 +20,7 @@ const quiz_questions = {
  },
  'answer': 1,
  'answerText': 'Mohammed Salah'},
- 
+
  2: {
    'question': "Liverpool purchased Coutinho from _____ and sold him to _____?",
  'options': {
@@ -32,7 +32,7 @@ const quiz_questions = {
  },
  'answer': 4,
  'answerText': 'Inter Milan; Barcelona'},
- 
+
  3: {
     'question': "Who is Liverpool's manager for the 2017-2018 season?",
  'options': {
@@ -44,7 +44,7 @@ const quiz_questions = {
  },
  'answer': 2,
  'answerText': 'Jurgen Klopp'},
- 
+
  4: {
     'question': "Which current Liverpool first team player is from Liverpool, England?",
  'options': {
@@ -56,7 +56,7 @@ const quiz_questions = {
  },
  'answer': 2,
  'answerText': 'Trent Arnold-Alexander'},
- 
+
  5: {
     'question': "Which player cost Liverpool a reported £75 millon?",
  'options': {
@@ -68,7 +68,7 @@ const quiz_questions = {
  },
  'answer': 1,
  'answerText': 'Virgil Van Dijk'},
- 
+
  6: {
     'question': "Which Midfielder signed a pre-contract with Liverpool and will join the team for the 2018-2019 season?",
  'options': {
@@ -80,7 +80,7 @@ const quiz_questions = {
  },
  'answer': 1,
  'answerText': 'Naby Keita'},
- 
+
  7: {
     'question': "Which Midfielder played a majority of the 2016-2017 season as a Left Back?",
  'options': {
@@ -92,7 +92,7 @@ const quiz_questions = {
  },
  'answer': 5,
  'answerText': 'James Milner'},
- 
+
  8: {
     'question': "Who is Liverpool's current (2017-2018) main kit sponsor?",
  'options': {
@@ -104,7 +104,7 @@ const quiz_questions = {
  },
  'answer': 2,
  'answerText': 'Standard Charter'},
- 
+
  9: {
     'question': "Who are Liverpool's local rival?",
  'options': {
@@ -116,7 +116,7 @@ const quiz_questions = {
  },
  'answer': 3,
  'answerText': 'Everton'},
- 
+
  10: {
     'question': "Where do Liverpool play their home games?",
  'options': {
@@ -141,9 +141,9 @@ function newGame(){
 
 // this function will be repsonsible for rendering the question to the browser
   //randomize questions
-function generateQuestion(){
+function generateQuestion() {
   //check if question has previously been asked; if already asked, pick new question
-  
+
   let limit = Object.keys(quiz_questions).length;
   num = Math.floor(Math.random()*limit + 1);
   if(prior_questions.indexOf(num)>-1){
@@ -153,8 +153,8 @@ function generateQuestion(){
      renderQuestion();
   }
 }
-  
-function renderQuestion(){
+
+function renderQuestion() {
   //render question and MC opitons to browser
   prior_questions.push(num);
   $('#text').html(quiz_questions[num]["question"]);
@@ -170,12 +170,12 @@ function renderQuestion(){
   count++;
   updateQuestionNum();
   questionTotal();
-  $('#progress').text(count+"/"+count_limit);  
+  $('#progress').text(count+"/"+count_limit);
 }
 
 //render feedback to the user
 //if correct, render modal with success message
-function correct(user_answer){
+function correct(user_answer) {
   if(user_answer == quiz_questions[num]["answer"]) {
     return true;
   }else{
@@ -184,28 +184,28 @@ function correct(user_answer){
 }
 
 //render the current question number
-function updateQuestionNum(){
+function updateQuestionNum() {
   $('.questionNum').text(count);
 }
 
 //render total number of questions
-function questionTotal(){
+function questionTotal() {
   $('.js-questionTotal').text(count_limit);
 }
 
   //increase correct question counter
-function updateCorrectScore(){
+function updateCorrectScore() {
   $('.correctScore').text(correctScore);
   }
 
   //increase incorrect question counter
-function updateIncorrectScore(){
+function updateIncorrectScore() {
   $('.incorrectScore').text(incorrectScore);
   }
 
-//display team rank based on # of correct Q's  
-function defineRank(){
-    if (correctScore == 5){
+//display team rank based on # of correct Q's
+function defineRank( ){
+    if (correctScore == 5) {
         $('.js-rank').text('You are ready to join the first team!');
     } else if (correctScore == 4) {
         $('.js-rank').text('You are ready to join the reserve squad!');
@@ -217,30 +217,28 @@ function defineRank(){
         $('.js-rank').text('You are clearly an Everton fan...');
     } else if (correctScore == 0) {
         $('.js-rank').text('Typical United fan...');
-    }  
+    }
   }
 
 
 // this function will be repsonsible for restarting the quiz
 
 //Document Ready
-$(document).ready(function() {
+$(document).ready(() => {
     //functionality for START
-    $("#start-btn").on('click', function() {       
-        //console.log("Start button clicked");
+    $("#start-btn").on('click', () => {
         scrnBtn = '#submit-btn';
         $("#question").removeClass(".hidden");
         $("img").addClass("small");
-        $("#start").fadeOut(500, function() {
+        $("#start").fadeOut(500, () => {
             newGame();
             generateQuestion();
-            //renderQuestion();
-            $("#quiz").fadeIn(500);    
+            $("#quiz").fadeIn(500);
         });
     });
 
     //functionality for SUBMIT
-    $("#submit-btn").on('click', function() {
+    $("#submit-btn").on('click', () => {
         var user_answer = $('input:radio[name=multipleChoice]:checked').val();
         if (!user_answer) {
             alert('Please make a selection!');
@@ -248,15 +246,14 @@ $(document).ready(function() {
             scrnBtn = '.continue-btn';
 
             if (correct(user_answer)) {
-            
-                $('#quiz').fadeOut(500, function() {
+
+                $('#quiz').fadeOut(500, () => {
                   correctScore++;
                   updateCorrectScore();
-                  $('#correct').fadeIn(500);    
+                  $('#correct').fadeIn(500);
                 });
             } else {
-            
-                $('#quiz').fadeOut(500, function() {
+                $('#quiz').fadeOut(500, () => {
                   $('#incorrect').fadeIn(500);
                   incorrectScore++;
                   $('#solution').html(`The correct answer is: ${quiz_questions[num]["answerText"]}`);
@@ -265,18 +262,17 @@ $(document).ready(function() {
         }
     });
 
-    
-    //functionality to CONTINUE
-    $('.continue-btn').on('click', function(){
-      console.log('Continue triggered');
-      
-      //check if on final question
-      $('#correct').fadeOut(500, function() {
-        $('#incorrect').fadeOut(500, function(){
 
+    //functionality to CONTINUE
+    $('.continue-btn').on('click', () => {
+      // console.log('Continue triggered');
+
+      //check if on final question
+      $('#correct').fadeOut(500, () => {
+        $('#incorrect').fadeOut(500, () => {
 
           if(count >= count_limit){
-            //end of quiz, display final score modal 
+            //end of quiz, display final score modal
             updateCorrectScore();
             defineRank();
             scrnBtn = '#restart';
@@ -290,25 +286,24 @@ $(document).ready(function() {
         });
       });
     });
-    
+
     //functionality to RESET
-    $('#restart').on('click', function(){
+    $('#restart').on('click', () => {
       scrnBtn = '#start-btn';
-      $('#result').fadeOut(500, function(){
+      $('#result').fadeOut(500, () => {
         newGame();
         generateQuestion();
-        //renderQuestion();
         $('form input').prop('checked', false);
         $('#quiz').fadeIn(500);
       });
     });
 
-$(document).keyup(function(e) {
-    if(e.which == 13) {
-        console.log(scrnBtn);
-        $(scrnBtn).trigger('click');
-        console.log(scrnBtn);
-        console.log(' ');
-    }
-});
+    $(document).keyup(e => {
+        if(e.which == 13) {
+            // console.log(scrnBtn);
+            $(scrnBtn).trigger('click');
+            // console.log(scrnBtn);
+            // console.log(' ');
+        }
+    });
 });
